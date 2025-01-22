@@ -5,17 +5,16 @@ from config import Config
 from aiogram.fsm.storage.memory import MemoryStorage
 from middlewares import LoggingMiddleware
 
-import handlers
-
+from handlers import profile_handlers, tracking_handlers, progress_handlers
 
 async def main():
     bot = Bot(token=Config.BOT_TOKEN)
     dp = Dispatcher(storage=MemoryStorage())
 
     dp.message.middleware(LoggingMiddleware())
-    dp.include_router(handlers.profile_handlers.router)
-    dp.include_router(handlers.tracking_handlers.router)
-    dp.include_router(handlers.progress_handlers.router)
+    dp.include_router(profile_handlers.router)
+    dp.include_router(tracking_handlers.router)
+    dp.include_router(progress_handlers.router)
 
     # Регистрация команд меню
     await bot.set_my_commands(
